@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorites - Car Explorer</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sport: {
+                            primary: '#FF0000',
+                            secondary: '#000000',
+                            accent: '#8B0000',
+                            text: '#FFFFFF',
+                        },
+                        eco: {
+                            primary: '#22C55E',
+                            secondary: '#FFFFFF',
+                            accent: '#16A34A',
+                            text: '#1F2937',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/favorites.css">
+</head>
+
+<body data-theme="eco" class="overflow-x-hidden">
+
+    <!-- ===========================
+       NAVIGATION BAR
+       =========================== -->
+    <nav class="navbar fixed top-0 left-0 w-full z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+
+            <!-- Logo -->
+            <div class="flex items-center">
+                <div style="color: #FF0000; font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 1.5rem;">EXOTICS</div>
+            </div>
+
+            <!-- Navigation Links (Desktop) -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="navbar-link text-current">Home</a>
+                <a href="cars.html" class="navbar-link text-current">Browse Cars</a>
+                <a href="favorites.html" class="navbar-link text-current">Favorites</a>
+                <a href="compare.html" class="navbar-link text-current">Compare</a>
+            </div>
+
+            <!-- Right Side: Theme Toggle & Mobile Menu Button -->
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium hidden sm:inline">Eco</span>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <div class="theme-toggle-slider"></div>
+                </button>
+                <span class="text-sm font-medium hidden sm:inline">Sport</span>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden mobile-menu-btn" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path class="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path class="close-icon hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <div class="mobile-menu-content">
+                <a href="index.html" class="mobile-menu-link">Home</a>
+                <a href="cars.html" class="mobile-menu-link">Browse Cars</a>
+                <a href="favorites.html" class="mobile-menu-link">Favorites</a>
+                <a href="compare.html" class="mobile-menu-link">Compare</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===========================
+       PAGE HERO SECTION
+       =========================== -->
+    <section class="page-hero pt-32 pb-16 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-12 scroll-reveal">
+                <div>
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-black mb-4 font-display">
+                        My <span class="text-gradient">Favorites</span>
+                    </h1>
+                    <p class="text-xl opacity-80 max-w-3xl">
+                        Your personally curated collection of dream cars
+                    </p>
+                </div>
+                
+                <!-- Clear All Button -->
+                <button id="clear-all-btn" class="clear-all-btn mt-6 md:mt-0 hidden">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                    Clear All Favorites
+                </button>
+            </div>
+
+            <!-- Favorites Count -->
+            <div class="favorites-count scroll-reveal">
+                <p class="text-lg opacity-80">
+                    You have <span id="favorites-count" class="font-bold text-gradient">0</span> favorite cars
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================
+       FAVORITES GRID SECTION
+       =========================== -->
+    <section class="py-12 px-6">
+        <div class="max-w-7xl mx-auto">
+
+            <!-- Loading State -->
+            <div id="loading-favorites" class="loading-state">
+                <div class="loading-spinner"></div>
+                <p class="text-lg opacity-70 mt-4">Loading your favorites...</p>
+            </div>
+
+            <!-- Favorites Grid -->
+            <div id="favorites-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+                <!-- Favorite car cards will be dynamically inserted here -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state hidden">
+                <div class="empty-icon">
+                    <svg class="w-32 h-32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                    </svg>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-black mb-4 font-display">No Favorites Yet</h2>
+                <p class="text-xl opacity-70 mb-8 max-w-md mx-auto">
+                    Start building your dream garage by adding cars to your favorites
+                </p>
+                <a href="cars.html" class="btn-primary btn-sport btn-large">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    Browse Cars
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===========================
+       FOOTER
+       =========================== -->
+    <footer class="py-12 px-6 border-t border-opacity-20" style="border-color: currentColor;">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="opacity-70 text-sm md:text-base">
+                &copy; 2025 Car Explorer. Built with passion for automotive enthusiasts.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Confirmation Modal (Custom) -->
+    <div id="confirm-modal" class="confirm-modal hidden">
+        <div class="confirm-modal-overlay"></div>
+        <div class="confirm-modal-content">
+            <div class="confirm-modal-icon">
+                <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                </svg>
+            </div>
+            <h3 class="text-2xl font-bold mb-2">Clear All Favorites?</h3>
+            <p class="opacity-70 mb-6">This action cannot be undone. All your favorite cars will be removed.</p>
+            <div class="confirm-modal-actions">
+                <button id="confirm-cancel" class="btn-secondary">Cancel</button>
+                <button id="confirm-clear" class="btn-danger">Clear All</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===========================
+       JAVASCRIPT
+       =========================== -->
+    <script type="module" src="../js/theme.js"></script>
+    <script src="../js/animations.js"></script>
+    <script type="module" src="../js/favorites.js"></script>
+
+</body>
+
+</html>
+

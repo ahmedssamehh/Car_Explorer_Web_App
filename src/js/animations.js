@@ -213,32 +213,70 @@ const enhanceNavbarAnimation = () => {
 };
 
 // ===========================
+// MOBILE MENU
+// ===========================
+
+const initMobileMenu = () => {
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (!mobileMenuBtn || !mobileMenu) return;
+    
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('active');
+        mobileMenu.classList.toggle('hidden');
+        mobileMenuBtn.classList.toggle('active');
+    });
+    
+    // Close menu when clicking a link
+    const mobileLinks = mobileMenu.querySelectorAll('.mobile-menu-link');
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            mobileMenu.classList.add('hidden');
+            mobileMenuBtn.classList.remove('active');
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+            mobileMenu.classList.remove('active');
+            mobileMenu.classList.add('hidden');
+            mobileMenuBtn.classList.remove('active');
+        }
+    });
+};
+
+// ===========================
 // INITIALIZE ALL ANIMATIONS
 // ===========================
 
 const initAllAnimations = () => {
-  // Wait for DOM to be fully loaded
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      initScrollReveal();
-      initNumberCounting();
-      // initParallaxScroll(); // Commented out for better mobile performance
-      initButtonEffects();
-      enhanceThemeTransitions();
-      initFloatingShapes();
-      initScrollProgress();
-      enhanceNavbarAnimation();
-    });
-  } else {
-    initScrollReveal();
-    initNumberCounting();
-    // initParallaxScroll(); // Commented out for better mobile performance
-    initButtonEffects();
-    enhanceThemeTransitions();
-    initFloatingShapes();
-    initScrollProgress();
-    enhanceNavbarAnimation();
-  }
+    // Wait for DOM to be fully loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            initScrollReveal();
+            initNumberCounting();
+            // initParallaxScroll(); // Commented out for better mobile performance
+            initButtonEffects();
+            enhanceThemeTransitions();
+            initFloatingShapes();
+            initScrollProgress();
+            enhanceNavbarAnimation();
+            initMobileMenu();
+        });
+    } else {
+        initScrollReveal();
+        initNumberCounting();
+        // initParallaxScroll(); // Commented out for better mobile performance
+        initButtonEffects();
+        enhanceThemeTransitions();
+        initFloatingShapes();
+        initScrollProgress();
+        enhanceNavbarAnimation();
+        initMobileMenu();
+    }
 };
 
 // ===========================

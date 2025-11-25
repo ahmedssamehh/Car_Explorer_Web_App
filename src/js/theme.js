@@ -8,6 +8,12 @@ const getCurrentTheme = () => {
   return localStorage.getItem('theme') || 'eco';
 };
 
+// Set theme immediately on page load (before DOMContentLoaded)
+(function() {
+  const theme = localStorage.getItem('theme') || 'eco';
+  document.body.setAttribute('data-theme', theme);
+})();
+
 // Set theme
 const setTheme = (theme) => {
   // Add transition class
@@ -152,6 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('🎨 Theme system initialized!');
 });
 
-// Export functions for use in other modules
-export { getCurrentTheme, setTheme, toggleTheme };
+// Make functions globally available (no ES6 exports to avoid module errors)
+window.getCurrentTheme = getCurrentTheme;
+window.setTheme = setTheme;
+window.toggleTheme = toggleTheme;
 

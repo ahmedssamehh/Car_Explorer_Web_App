@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Cars - Car Explorer</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sport: {
+                            primary: '#FF0000',
+                            secondary: '#000000',
+                            accent: '#8B0000',
+                            text: '#FFFFFF',
+                        },
+                        eco: {
+                            primary: '#22C55E',
+                            secondary: '#FFFFFF',
+                            accent: '#16A34A',
+                            text: '#1F2937',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/compare.css">
+</head>
+
+<body data-theme="eco" class="overflow-x-hidden">
+
+    <!-- ===========================
+       NAVIGATION BAR
+       =========================== -->
+    <nav class="navbar fixed top-0 left-0 w-full z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+
+            <!-- Logo -->
+            <div class="flex items-center">
+                <div style="color: #FF0000; font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 1.5rem;">EXOTICS</div>
+            </div>
+
+            <!-- Navigation Links (Desktop) -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="navbar-link text-current">Home</a>
+                <a href="cars.html" class="navbar-link text-current">Browse Cars</a>
+                <a href="favorites.html" class="navbar-link text-current">Favorites</a>
+                <a href="compare.html" class="navbar-link text-current">Compare</a>
+            </div>
+
+            <!-- Right Side: Theme Toggle & Mobile Menu Button -->
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium hidden sm:inline">Eco</span>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <div class="theme-toggle-slider"></div>
+                </button>
+                <span class="text-sm font-medium hidden sm:inline">Sport</span>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden mobile-menu-btn" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path class="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path class="close-icon hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <div class="mobile-menu-content">
+                <a href="index.html" class="mobile-menu-link">Home</a>
+                <a href="cars.html" class="mobile-menu-link">Browse Cars</a>
+                <a href="favorites.html" class="mobile-menu-link">Favorites</a>
+                <a href="compare.html" class="mobile-menu-link">Compare</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===========================
+       PAGE HERO SECTION
+       =========================== -->
+    <section class="page-hero pt-32 pb-16 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-12 scroll-reveal">
+                <div>
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-black mb-4 font-display">
+                        Compare <span class="text-gradient">Cars</span>
+                    </h1>
+                    <p class="text-xl opacity-80 max-w-3xl">
+                        Compare specs, features, and performance side-by-side
+                    </p>
+                </div>
+                
+                <!-- Clear Compare Button -->
+                <button id="clear-compare-btn" class="clear-compare-btn mt-6 md:mt-0 hidden">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                    Clear Comparison
+                </button>
+            </div>
+
+            <!-- Comparison Count -->
+            <div class="compare-count scroll-reveal">
+                <p class="text-lg opacity-80">
+                    Comparing <span id="compare-count" class="font-bold text-gradient">0</span> cars (max 4)
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================
+       CAR SELECTION PANEL
+       =========================== -->
+    <section class="py-12 px-6 bg-opacity-50" id="selection-section">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold mb-6 font-display">
+                Select Cars from Your Favorites
+            </h2>
+
+            <!-- Loading State -->
+            <div id="loading-favorites-selection" class="loading-state">
+                <div class="loading-spinner"></div>
+                <p class="text-lg opacity-70 mt-4">Loading your favorites...</p>
+            </div>
+
+            <!-- Selection Grid -->
+            <div id="favorites-selection-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 hidden">
+                <!-- Selection cards will be inserted here -->
+            </div>
+
+            <!-- No Favorites State -->
+            <div id="no-favorites-state" class="no-favorites-state hidden">
+                <svg class="w-24 h-24 mx-auto mb-6 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                </svg>
+                <h3 class="text-2xl font-bold mb-2">No Favorite Cars</h3>
+                <p class="opacity-70 mb-6">Add cars to your favorites first to compare them</p>
+                <a href="cars.html" class="btn-primary btn-sport">
+                    Browse Cars
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================
+       COMPARISON TABLE SECTION
+       =========================== -->
+    <section class="py-12 px-6">
+        <div class="max-w-7xl mx-auto">
+
+            <!-- Empty State -->
+            <div id="empty-compare-state" class="empty-compare-state">
+                <div class="empty-icon">
+                    <svg class="w-32 h-32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-black mb-4 font-display">No Cars Selected</h2>
+                <p class="text-xl opacity-70 mb-8 max-w-md mx-auto">
+                    Select at least 2 cars from your favorites to start comparing
+                </p>
+            </div>
+
+            <!-- Comparison Table Container -->
+            <div id="comparison-container" class="comparison-container hidden">
+                <div class="comparison-table-wrapper">
+                    <table id="comparison-table" class="comparison-table">
+                        <thead>
+                            <tr id="table-header-row">
+                                <th class="feature-label-cell">Feature</th>
+                                <!-- Car header cells will be inserted here -->
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <!-- Comparison rows will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===========================
+       FOOTER
+       =========================== -->
+    <footer class="py-12 px-6 border-t border-opacity-20" style="border-color: currentColor;">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="opacity-70 text-sm md:text-base">
+                &copy; 2025 Car Explorer. Built with passion for automotive enthusiasts.
+            </p>
+        </div>
+    </footer>
+
+    <!-- ===========================
+       JAVASCRIPT
+       =========================== -->
+    <script type="module" src="../js/theme.js"></script>
+    <script src="../js/animations.js"></script>
+    <script type="module" src="../js/compare.js"></script>
+
+</body>
+
+</html>
+

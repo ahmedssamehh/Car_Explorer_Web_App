@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Details - Car Explorer</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sport: {
+                            primary: '#FF0000',
+                            secondary: '#000000',
+                            accent: '#8B0000',
+                            text: '#FFFFFF',
+                        },
+                        eco: {
+                            primary: '#22C55E',
+                            secondary: '#FFFFFF',
+                            accent: '#16A34A',
+                            text: '#1F2937',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/details.css">
+</head>
+
+<body data-theme="eco" class="overflow-x-hidden">
+
+    <!-- ===========================
+       NAVIGATION BAR
+       =========================== -->
+    <nav class="navbar fixed top-0 left-0 w-full z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+
+            <!-- Logo -->
+            <div class="flex items-center">
+                <div style="color: #FF0000; font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 1.5rem;">EXOTICS</div>
+            </div>
+
+            <!-- Navigation Links (Desktop) -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="navbar-link text-current">Home</a>
+                <a href="cars.html" class="navbar-link text-current">Browse Cars</a>
+                <a href="favorites.html" class="navbar-link text-current">Favorites</a>
+                <a href="compare.html" class="navbar-link text-current">Compare</a>
+            </div>
+
+            <!-- Right Side: Theme Toggle & Mobile Menu Button -->
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium hidden sm:inline">Eco</span>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <div class="theme-toggle-slider"></div>
+                </button>
+                <span class="text-sm font-medium hidden sm:inline">Sport</span>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden mobile-menu-btn" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path class="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path class="close-icon hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <div class="mobile-menu-content">
+                <a href="index.html" class="mobile-menu-link">Home</a>
+                <a href="cars.html" class="mobile-menu-link">Browse Cars</a>
+                <a href="favorites.html" class="mobile-menu-link">Favorites</a>
+                <a href="compare.html" class="mobile-menu-link">Compare</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===========================
+       HERO SECTION
+       =========================== -->
+    <section id="hero-section" class="details-hero">
+        <div class="hero-image-container">
+            <img id="car-hero-image" src="" alt="Car" class="hero-image">
+            <div class="hero-overlay"></div>
+        </div>
+        
+        <div class="hero-content">
+            <div class="max-w-7xl mx-auto px-6">
+                <div id="hero-badge" class="hero-type-badge scroll-reveal"></div>
+                <h1 id="hero-title" class="hero-title scroll-reveal"></h1>
+                <p id="hero-year" class="hero-subtitle scroll-reveal"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================
+       MAIN CONTENT
+       =========================== -->
+    <main class="theme-bg min-h-screen">
+        
+        <!-- Loading State -->
+        <div id="loading-state" class="loading-container">
+            <div class="loading-spinner"></div>
+            <p class="text-lg font-medium mt-6 opacity-70">Loading car details...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="error-state" class="error-container hidden">
+            <svg class="w-24 h-24 mx-auto mb-6 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <h2 class="text-3xl font-bold mb-4">Car Not Found</h2>
+            <p class="text-lg opacity-70 mb-8">The car you're looking for doesn't exist.</p>
+            <a href="cars.html" class="btn-action btn-back">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                <span>Back to Cars</span>
+            </a>
+        </div>
+
+        <!-- Car Details Content -->
+        <div id="details-content" class="hidden">
+            
+            <!-- Description Section -->
+            <section class="py-12 px-6">
+                <div class="max-w-5xl mx-auto">
+                    <div class="description-card scroll-reveal">
+                        <p id="car-description" class="text-lg md:text-xl leading-relaxed"></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Specifications Section -->
+            <section class="py-12 px-6">
+                <div class="max-w-7xl mx-auto">
+                    <h2 class="section-title text-center mb-12 scroll-reveal">
+                        <span class="title-gradient">Technical Specifications</span>
+                    </h2>
+                    <div id="specs-grid" class="specs-grid">
+                        <!-- Specs will be dynamically inserted -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="py-12 px-6">
+                <div class="max-w-7xl mx-auto">
+                    <h2 class="section-title text-center mb-12 scroll-reveal">
+                        <span class="title-gradient">Features & Technology</span>
+                    </h2>
+                    <div id="features-grid" class="features-grid">
+                        <!-- Features will be dynamically inserted -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Action Buttons Section -->
+            <section class="py-12 px-6 pb-20">
+                <div class="max-w-5xl mx-auto">
+                    <div class="action-buttons-container scroll-reveal">
+                        <button id="favorite-btn" class="btn-action btn-favorite">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                            <span id="favorite-text">Add to Favorites</span>
+                        </button>
+                        
+                        <button id="compare-btn" class="btn-action btn-compare">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            <span id="compare-text">Add to Compare</span>
+                        </button>
+                        
+                        <a href="cars.html" class="btn-action btn-back">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                            </svg>
+                            <span>Back to Cars</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <!-- ===========================
+       SCRIPTS
+       =========================== -->
+    
+    <!-- EMBEDDED CAR DATA (No fetch needed!) -->
+    <script>
+        // Embed car data directly to avoid CORS issues
+        window.EMBEDDED_CARS_DATA = [{"id":1,"brand":"Ferrari","model":"SF90 Stradale","price":625000,"horsepower":986,"type":"hybrid","image":"https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&q=80","description":"Revolutionary plug-in hybrid supercar combining a twin-turbo V8 with three electric motors for unprecedented performance","engine":"4.0L V8 Twin-Turbo + 3 Electric Motors","topSpeed":211,"acceleration":2.5,"transmission":"8-Speed F1 DCT","drivetrain":"AWD","fuelType":"Plug-in Hybrid","seats":2,"year":2024,"weight":3461,"torque":590,"features":["Carbon fiber monocoque chassis","Three electric motors (two front, one rear)","eManettino drive mode selector","Adaptive suspension with magnetorheological dampers","Carbon-ceramic brakes with ABS","Launch control and traction control","Alcantara and carbon fiber interior","16-inch digital instrument cluster","Apple CarPlay integration","Premium sound system","Automatic climate control","Parking sensors and rear camera","LED headlights with DRL","Active aerodynamics","Regenerative braking system"]},{"id":2,"brand":"Lamborghini","model":"Aventador SVJ","price":517770,"horsepower":770,"type":"sports","image":"https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80","description":"Ultimate expression of V12 naturally aspirated power with active aerodynamics and rear-wheel steering","engine":"6.5L V12 Naturally Aspirated","topSpeed":217,"acceleration":2.8,"transmission":"7-Speed ISR Single-Clutch","drivetrain":"AWD","fuelType":"Gasoline","seats":2,"year":2023,"weight":3362,"torque":531,"features":["Aerodinamica Lamborghini Attiva 2.0 (active aero)","Four-wheel steering system","Carbon fiber body panels","Pushrod suspension with electronic dampers","Carbon-ceramic brakes","Lamborghini Dynamic Steering (LDS)","ANIMA drive mode selector (Strada, Sport, Corsa)","Full Alcantara interior","12.3-inch TFT digital cockpit","Telemetry system for track performance","Apple CarPlay and Android Auto","Premium audio system","Dual-zone climate control","Rear-view camera","Titanium exhaust system"]},{"id":3,"brand":"Porsche","model":"Taycan Turbo S","price":185000,"horsepower":750,"type":"electric","image":"https://images.unsplash.com/photo-1614200187524-dc4b892acf16?w=800&q=80","description":"Pure electric performance sedan with 800V architecture and legendary Porsche handling dynamics","engine":"Dual Permanent Magnet Synchronous Motors","topSpeed":161,"acceleration":2.6,"transmission":"2-Speed Automatic (Rear)","drivetrain":"AWD","fuelType":"Electric (93.4 kWh)","seats":4,"year":2024,"weight":5132,"torque":774,"features":["800V electrical architecture","350kW ultra-fast charging (22 min 5-80%)","Adaptive air suspension with PASM","Porsche Active Suspension Management","Porsche Torque Vectoring Plus (PTV+)","Regenerative braking with up to 265kW recovery","Launch Control and Sport Chrono package","16.8-inch curved display","Passenger display screen","Burmester 3D High-End sound system","4-zone automatic climate control","Heated and ventilated seats","360-degree camera system","Adaptive cruise control with stop & go","Lane Keeping Assist and Traffic Sign Recognition"]},{"id":4,"brand":"McLaren","model":"720S","price":299000,"horsepower":710,"type":"sports","image":"https://images.unsplash.com/photo-1621135802920-133df287f89c?w=800&q=80","description":"British engineering excellence featuring carbon fiber monocoque and ProActive Chassis Control","engine":"4.0L V8 Twin-Turbo","topSpeed":212,"acceleration":2.9,"transmission":"7-Speed Seamless Shift DCT","drivetrain":"RWD","fuelType":"Gasoline","seats":2,"year":2023,"weight":3128,"torque":568,"features":["Carbon fiber MonoCage II chassis","Proactive Chassis Control II","Variable Drift Control","Dihedral doors","Active aerodynamics with Aero modes","Carbon-ceramic brakes with cooling ducts","Track telemetry system","8-inch touchscreen infotainment","12-speaker Bowers & Wilkins audio","Alcantara sport seats","Dual-zone climate control","Folding driver display","Rear-view camera","Launch control","Three drive modes (Comfort, Sport, Track)"]},{"id":5,"brand":"Rolls-Royce","model":"Phantom","price":460000,"horsepower":563,"type":"luxury","image":"https://images.unsplash.com/photo-1563720360172-67b8f3dce741?w=800&q=80","description":"The pinnacle of automotive luxury featuring magic carpet ride and bespoke craftsmanship","engine":"6.75L V12 Twin-Turbo","topSpeed":155,"acceleration":5.3,"transmission":"8-Speed ZF Automatic","drivetrain":"RWD","fuelType":"Gasoline","seats":5,"year":2024,"weight":5643,"torque":664,"features":["Magic Carpet Ride suspension with Flagbearer","Self-leveling air suspension","Bespoke audio system with 18 speakers","Starlight headliner with 1,344 fiber optics","Gallery art space in dashboard","Champagne cooler and crystal flutes","Picnic tables in rear seats","Lambswool floor mats","Heated and ventilated massage seats (all positions)","Panoramic sunroof","Night vision with pedestrian detection","Head-up display","360-degree camera with helipad view","Adaptive cruise control","Power-closing doors with soft-close"]},{"id":6,"brand":"Tesla","model":"Model S Plaid","price":108990,"horsepower":1020,"type":"electric","image":"https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80","description":"Fastest accelerating production car with tri-motor setup and industry-leading range","engine":"Tri-Motor Electric (Front + Dual Rear)","topSpeed":200,"acceleration":1.99,"transmission":"Single-Speed Direct Drive","drivetrain":"AWD","fuelType":"Electric (100 kWh)","seats":5,"year":2024,"weight":4766,"torque":1050,"features":["396-mile EPA estimated range","250kW Supercharging capability","Carbon fiber spoiler and diffuser","Track Mode with drift settings","Adaptive air suspension","17-inch cinematic display","8-inch rear display","22-speaker audio system","Wireless charging for devices","Heated seats (all positions)","HEPA air filtration system","Autopilot with Full Self-Driving capability","Sentry Mode and Dashcam","Over-the-air software updates","Glass roof with UV protection"]},{"id":7,"brand":"Bentley","model":"Bentayga Speed","price":245000,"horsepower":626,"type":"suv","image":"https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&q=80","description":"Luxury SUV combining supreme comfort with W12 performance and handcrafted interior","engine":"6.0L W12 Twin-Turbo","topSpeed":190,"acceleration":3.8,"transmission":"8-Speed Automatic","drivetrain":"AWD","fuelType":"Gasoline","seats":5,"year":2024,"weight":5379,"torque":664,"features":["All-wheel drive with Torque Vectoring","Active Roll Control with 48V electric system","Adaptive air suspension with four modes","Carbon-ceramic brakes","Mulliner Driving Specification","Naim premium audio with 20 speakers","Rotating display (12.3-inch screen/3 analog dials/veneer)","Handcrafted leather interior","Diamond-quilted seats with 22-way adjustment","Heated, ventilated, and massage seats","Panoramic glass sunroof","Head-up display","Night Vision with thermal imaging","Rear-seat entertainment system","Bentley Dynamic Ride system"]},{"id":8,"brand":"Aston Martin","model":"DB11 AMR","price":241000,"horsepower":630,"type":"coupe","image":"https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80","description":"British grand tourer blending elegance with V12 performance and timeless design","engine":"5.2L V12 Twin-Turbo","topSpeed":208,"acceleration":3.5,"transmission":"8-Speed ZF Automatic","drivetrain":"RWD","fuelType":"Gasoline","seats":4,"year":2023,"weight":3968,"torque":516,"features":["Adaptive suspension with three modes","Limited-slip differential","Carbon-ceramic brakes","Aeroblade active aerodynamics","8-inch LCD infotainment screen","12-speaker premium audio system","Apple CarPlay and Android Auto","Full-grain leather interior","Sport Plus seats with heating","Dual-zone climate control","Rear parking sensors and camera","Auto-dimming mirrors","Keyless entry and start","LED headlights with DRL","GT/Sport/Sport+ driving modes"]},{"id":9,"brand":"BMW","model":"M5 CS","price":142000,"horsepower":627,"type":"sedan","image":"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80","description":"Ultimate performance sedan combining daily usability with track-focused dynamics","engine":"4.4L V8 Twin-Turbo","topSpeed":190,"acceleration":2.9,"transmission":"8-Speed M Steptronic","drivetrain":"AWD (M xDrive)","fuelType":"Gasoline","seats":5,"year":2024,"weight":4069,"torque":553,"features":["M xDrive all-wheel-drive system with RWD mode","Active M Differential","Adaptive M suspension with damper control","Carbon-ceramic brakes","Carbon fiber hood, roof, and trunk","M Sport exhaust with titanium tips","12.3-inch digital instrument cluster","10.25-inch iDrive touchscreen","Harman Kardon surround sound","M Carbon bucket seats","Heated and ventilated seats","Head-up display","Parking Assistant Plus","Driving Assistant Professional","Laser headlights with 1,650 ft range"]},{"id":10,"brand":"Mercedes-AMG","model":"GT Black Series","price":389000,"horsepower":720,"type":"sports","image":"https://images.unsplash.com/photo-1618843479619-f3d0d3f6c195?w=800&q=80","description":"Track-focused masterpiece featuring flat-plane crank V8 and extensive aerodynamics","engine":"4.0L V8 Twin-Turbo Flat-Plane","topSpeed":202,"acceleration":3.1,"transmission":"7-Speed AMG Speedshift DCT","drivetrain":"RWD","fuelType":"Gasoline","seats":2,"year":2023,"weight":3616,"torque":590,"features":["Flat-plane crankshaft V8","Adjustable front splitter and rear wing","Carbon fiber bodywork","AMG coilover suspension with adjustable dampers","Carbon-ceramic brakes with cooling ducts","AMG Track Pace telemetry system","Race Mode with drift settings","12.3-inch digital instrument cluster","AMG Performance seats","Alcantara steering wheel and interior","Dual-zone climate control","Burmester surround sound system","AMG Ride Control suspension","Launch control and traction modes","Titanium roll cage"]},{"id":11,"brand":"Range Rover","model":"Sport SVR","price":119000,"horsepower":575,"type":"suv","image":"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80","description":"Performance SUV combining supercharged V8 power with legendary off-road capability","engine":"5.0L V8 Supercharged","topSpeed":176,"acceleration":4.3,"transmission":"8-Speed ZF Automatic","drivetrain":"AWD (Terrain Response)","fuelType":"Gasoline","seats":5,"year":2024,"weight":5181,"torque":516,"features":["Terrain Response 2 with auto mode","All-Wheel Steering","Electronic Active Rear Differential","Adaptive dynamics with continuous damping","Torque Vectoring by Braking","11.4-inch Pivi Pro touchscreen","12.3-inch Interactive Driver Display","Meridian Signature sound system","Windsor leather interior with SVR embossing","Heated and cooled seats (front and rear)","Panoramic sliding roof","ClearSight rear-view mirror","Wade Sensing for deep water","360-degree camera and parking assist","Adaptive cruise control with steering assist"]},{"id":12,"brand":"Bugatti","model":"Chiron Super Sport","price":3900000,"horsepower":1578,"type":"sports","image":"https://images.unsplash.com/photo-1566023888485-4e3b5c8ea6e5?w=800&q=80","description":"Hypercar legend with quad-turbocharged W16 engine delivering unmatched power and luxury","engine":"8.0L W16 Quad-Turbo","topSpeed":273,"acceleration":2.3,"transmission":"7-Speed Dual-Clutch","drivetrain":"AWD","fuelType":"Gasoline","seats":2,"year":2023,"weight":4398,"torque":1180,"features":["Quad-turbocharged W16 engine with 10 radiators","Carbon fiber monocoque chassis","Active aerodynamics with hydraulic rear wing","Adaptive chassis with five modes","Carbon-silicon-carbide brakes","Titanium exhaust system","Longtail body for reduced drag","Full leather and carbon fiber interior","Premium sound system","Digital instrument cluster","Climate control","Rearview camera","Speed key for top speed mode","Anodized aluminum switches","Handcrafted by specialists in Molsheim"]},{"id":13,"brand":"Audi","model":"e-tron GT RS","price":147000,"horsepower":637,"type":"electric","image":"https://images.unsplash.com/photo-1614162692292-7ac56d7f3c63?w=800&q=80","description":"Electric grand tourer with stunning design and quattro all-wheel drive performance","engine":"Dual Permanent Magnet Motors","topSpeed":155,"acceleration":3.1,"transmission":"2-Speed Automatic (Rear)","drivetrain":"AWD (quattro electric)","fuelType":"Electric (93.4 kWh)","seats":4,"year":2024,"weight":5060,"torque":612,"features":["270kW fast charging (22.5 min 5-80%)","238-mile EPA range","Adaptive air suspension with controlled damping","Electric quattro all-wheel drive","Rear-wheel steering","Progressive steering","Recuperation up to 265kW","Three-chamber air suspension","12.3-inch Virtual Cockpit Plus","10.1-inch MMI touchscreen","Bang & Olufsen 3D sound (16 speakers)","Sport seats Plus with heating/ventilation","4-zone climate control","Matrix LED headlights with laser high beam","360-degree cameras and parking assist"]},{"id":14,"brand":"Lexus","model":"LC 500","price":98000,"horsepower":471,"type":"coupe","image":"https://images.unsplash.com/photo-1555652430-bcef36c3b2e9?w=800&q=80","description":"Japanese luxury coupe featuring naturally aspirated V8 and stunning design language","engine":"5.0L V8 Naturally Aspirated","topSpeed":168,"acceleration":4.4,"transmission":"10-Speed Direct Shift Automatic","drivetrain":"RWD","fuelType":"Gasoline","seats":4,"year":2024,"weight":4280,"torque":398,"features":["10-speed Direct-Shift automatic transmission","Adaptive Variable Suspension","Limited-slip differential (standard on Performance package)","Active exhaust system","Brembo brake system","10.3-inch multimedia display","12.3-inch TFT instrument cluster","Mark Levinson audio with 13 speakers","Apple CarPlay and Android Auto","Semi-aniline leather seats","Heated and ventilated front seats","Climate Concierge (4-zone climate)","Head-up display","Lexus Safety System+ 2.5","Triple-beam LED headlights"]},{"id":15,"brand":"Maserati","model":"MC20","price":242000,"horsepower":621,"type":"sports","image":"https://images.unsplash.com/photo-1580274455191-1c62238fa333?w=800&q=80","description":"Italian supercar with Nettuno V6 engine featuring F1-derived pre-chamber combustion","engine":"3.0L V6 Twin-Turbo (Nettuno)","topSpeed":202,"acceleration":2.9,"transmission":"8-Speed Dual-Clutch","drivetrain":"RWD","fuelType":"Gasoline","seats":2,"year":2024,"weight":3306,"torque":538,"features":["Nettuno engine with F1 pre-chamber combustion","Carbon fiber monocoque","Butterfly doors","Active suspension with electronic dampers","Brembo carbon-ceramic brakes","Limited-slip differential with torque vectoring","GT, Wet, Sport, Corsa, and ESC Off modes","10.25-inch central touchscreen","Digital instrument cluster","Sonus faber audio system","Alcantara and carbon fiber interior","Sport seats with carbon fiber shells","Dual-zone climate control","Rear parking camera","Launch control system"]}];
+        console.log('✅ Embedded data ready:', window.EMBEDDED_CARS_DATA.length, 'cars');
+    </script>
+    
+    <script src="../js/theme.js"></script>
+    <script src="../js/animations.js"></script>
+    <script src="../js/details.js"></script>
+
+</body>
+
+</html>
+

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Cars - Car Explorer</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sport: {
+                            primary: '#FF0000',
+                            secondary: '#000000',
+                            accent: '#8B0000',
+                            text: '#FFFFFF',
+                        },
+                        eco: {
+                            primary: '#22C55E',
+                            secondary: '#FFFFFF',
+                            accent: '#16A34A',
+                            text: '#1F2937',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/cars.css">
+</head>
+
+<body data-theme="eco" class="overflow-x-hidden">
+
+    <!-- ===========================
+       NAVIGATION BAR
+       =========================== -->
+    <nav class="navbar fixed top-0 left-0 w-full z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+
+            <!-- Logo -->
+            <div class="flex items-center">
+                <div style="color: #FF0000; font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 1.5rem;">EXOTICS</div>
+            </div>
+
+            <!-- Navigation Links (Desktop) -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="navbar-link text-current">Home</a>
+                <a href="cars.html" class="navbar-link text-current">Browse Cars</a>
+                <a href="favorites.html" class="navbar-link text-current">Favorites</a>
+                <a href="compare.html" class="navbar-link text-current">Compare</a>
+            </div>
+
+            <!-- Right Side: Theme Toggle & Mobile Menu Button -->
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium hidden sm:inline">Eco</span>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <div class="theme-toggle-slider"></div>
+                </button>
+                <span class="text-sm font-medium hidden sm:inline">Sport</span>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden mobile-menu-btn" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path class="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path class="close-icon hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <div class="mobile-menu-content">
+                <a href="index.html" class="mobile-menu-link">Home</a>
+                <a href="cars.html" class="mobile-menu-link">Browse Cars</a>
+                <a href="favorites.html" class="mobile-menu-link">Favorites</a>
+                <a href="compare.html" class="mobile-menu-link">Compare</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===========================
+       PAGE HERO SECTION
+       =========================== -->
+    <section class="page-hero pt-32 pb-16 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12 scroll-reveal">
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-black mb-4 font-display">
+                    Explore Our <span class="text-gradient">Collection</span>
+                </h1>
+                <p class="text-xl opacity-80 max-w-3xl mx-auto">
+                    Discover the world's most exclusive automobiles. Filter, search, and find your perfect match.
+                </p>
+            </div>
+
+            <!-- Search & Filter Bar -->
+            <div class="filters-container scroll-reveal">
+                <!-- Search Bar -->
+                <div class="search-wrapper">
+                    <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <input type="text" id="search-input" class="search-input" placeholder="Search by brand or model...">
+                </div>
+
+                <!-- Filters Row -->
+                <div class="filters-row">
+                    <!-- Type Filter -->
+                    <div class="filter-group">
+                        <label class="filter-label">Type</label>
+                        <select id="type-filter" class="filter-select">
+                            <option value="all">All Types</option>
+                            <option value="sports">Sports</option>
+                            <option value="suv">SUV</option>
+                            <option value="electric">Electric</option>
+                            <option value="hybrid">Hybrid</option>
+                            <option value="luxury">Luxury</option>
+                            <option value="sedan">Sedan</option>
+                            <option value="coupe">Coupe</option>
+                        </select>
+                    </div>
+
+                    <!-- Horsepower Filter -->
+                    <div class="filter-group">
+                        <label class="filter-label">Horsepower</label>
+                        <select id="hp-filter" class="filter-select">
+                            <option value="all">All Power</option>
+                            <option value="0-200">Under 200</option>
+                            <option value="200-400">200 - 400</option>
+                            <option value="400-700">400 - 700</option>
+                            <option value="700-9999">700+</option>
+                        </select>
+                    </div>
+
+                    <!-- Sort -->
+                    <div class="filter-group">
+                        <label class="filter-label">Sort By</label>
+                        <select id="sort-select" class="filter-select">
+                            <option value="default">Default</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="hp-low">Horsepower: Low to High</option>
+                            <option value="hp-high">Horsepower: High to Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Price Range Filter -->
+                <div class="price-filter-group">
+                    <label class="filter-label">Price Range</label>
+                    <div class="price-slider-wrapper">
+                        <input type="range" id="price-min" class="price-slider" min="0" max="3000000" value="0" step="10000">
+                        <input type="range" id="price-max" class="price-slider" min="0" max="3000000" value="3000000" step="10000">
+                    </div>
+                    <div class="price-display">
+                        <span id="price-min-display">$0</span>
+                        <span id="price-max-display">$3,000,000</span>
+                    </div>
+                </div>
+
+                <!-- Active Filters Display -->
+                <div id="active-filters" class="active-filters"></div>
+
+                <!-- Reset Filters -->
+                <button id="reset-filters" class="reset-btn">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                    Reset Filters
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================
+       CARS GRID SECTION
+       =========================== -->
+    <section class="py-12 px-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Results Count -->
+            <div class="results-info mb-8">
+                <p class="text-lg opacity-80">
+                    Showing <span id="results-count" class="font-bold text-gradient">0</span> cars
+                </p>
+            </div>
+
+            <!-- Loading Skeletons -->
+            <div id="loading-skeletons" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Skeleton cards will be generated by JS -->
+            </div>
+
+            <!-- Cars Grid -->
+            <div id="cars-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Car cards will be dynamically inserted here -->
+            </div>
+
+            <!-- No Results Message -->
+            <div id="no-results" class="no-results hidden">
+                <svg class="w-24 h-24 mx-auto mb-6 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <h3 class="text-2xl font-bold mb-2">No cars found</h3>
+                <p class="opacity-70 mb-6">Try adjusting your filters or search terms</p>
+                <button onclick="document.getElementById('reset-filters').click()" class="btn-primary btn-sport">
+                    Reset Filters
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================
+       FOOTER
+       =========================== -->
+    <footer class="py-12 px-6 border-t border-opacity-20" style="border-color: currentColor;">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="opacity-70 text-sm md:text-base">
+                &copy; 2025 Car Explorer. Built with passion for automotive enthusiasts.
+            </p>
+        </div>
+    </footer>
+
+    <!-- ===========================
+       JAVASCRIPT
+       =========================== -->
+    <script type="module" src="../js/theme.js"></script>
+    <script src="../js/animations.js"></script>
+    <script type="module" src="../js/cars.js"></script>
+
+</body>
+
+</html>

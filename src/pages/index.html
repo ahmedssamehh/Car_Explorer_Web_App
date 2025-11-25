@@ -47,13 +47,13 @@
     <nav class="navbar fixed top-0 left-0 w-full z-50 px-6 py-4">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
 
-            <!-- Ferrari Logo -->
+            <!-- Ferrari Logo "null"-->
             <div class="flex items-center">
-                <img src="../../material/logo.png" alt="Ferrari Logo" class="ferrari-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <img src="" alt="Ferrari Logo" class="ferrari-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                 <div style="display:none; color: #FF0000; font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 1.5rem;">EXOTICS</div>
             </div>
 
-            <!-- Navigation Links -->
+            <!-- Navigation Links (Desktop) -->
             <div class="hidden md:flex items-center gap-8">
                 <a href="index.html" class="navbar-link text-current">Home</a>
                 <a href="cars.html" class="navbar-link text-current">Browse Cars</a>
@@ -61,15 +61,33 @@
                 <a href="compare.html" class="navbar-link text-current">Compare</a>
             </div>
 
-            <!-- Theme Toggle -->
+            <!-- Right Side: Theme Toggle & Mobile Menu Button -->
             <div class="flex items-center gap-4">
                 <span class="text-sm font-medium hidden sm:inline">Eco</span>
                 <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
           <div class="theme-toggle-slider"></div>
         </button>
                 <span class="text-sm font-medium hidden sm:inline">Sport</span>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden mobile-menu-btn" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path class="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path class="close-icon hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
             </div>
 
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <div class="mobile-menu-content">
+                <a href="index.html" class="mobile-menu-link">Home</a>
+                <a href="cars.html" class="mobile-menu-link">Browse Cars</a>
+                <a href="favorites.html" class="mobile-menu-link">Favorites</a>
+                <a href="compare.html" class="mobile-menu-link">Compare</a>
+            </div>
         </div>
     </nav>
 
@@ -80,7 +98,7 @@
 
         <!-- Video Background (Always Visible) -->
         <video id="hero-video" class="video-background" autoplay loop muted playsinline preload="auto">
-            <source src="../../material/BG Video.mp4" type="video/mp4">
+            <source src="../../material/BG Video3.mp4" type="video/mp4">
             <source src="https://assets.mixkit.co/videos/preview/mixkit-dashboard-of-a-sports-car-at-night-49838-large.mp4" type="video/mp4">
         </video>
 
