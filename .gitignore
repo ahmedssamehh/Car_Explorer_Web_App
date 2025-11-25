@@ -3,7 +3,7 @@
 
 # Except README.md
 !README.md
-
+.gitignore
 # Assignment and material files
 Assignment#2-JavaScript-Tailwind.pdf
 material/
