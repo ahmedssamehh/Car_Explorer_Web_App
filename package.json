@@ -1,0 +1,18 @@
+{
+  "name": "car-explorer",
+  "version": "1.0.0",
+  "description": "Premium Car Explorer Web Application",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx tailwindcss -i ./src/css/styles.css -o ./src/css/output.css --watch",
+    "build": "npx tailwindcss -i ./src/css/styles.css -o ./src/css/output.css --minify"
+  },
+  "keywords": ["cars", "automotive", "web-app"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "@tailwindcss/forms": "^0.5.7"
+  }
+}
+

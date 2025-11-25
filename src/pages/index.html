@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Explorer - Premium Automotive Experience</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sport: {
+                            primary: '#FF0000',
+                            secondary: '#000000',
+                            accent: '#8B0000',
+                            text: '#FFFFFF',
+                        },
+                        eco: {
+                            primary: '#22C55E',
+                            secondary: '#FFFFFF',
+                            accent: '#16A34A',
+                            text: '#1F2937',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body data-theme="eco" class="overflow-x-hidden">
+
+    <!-- ===========================
+       NAVIGATION BAR
+       =========================== -->
+    <nav class="navbar fixed top-0 left-0 w-full z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+
+            <!-- Ferrari Logo -->
+            <div class="flex items-center">
+                <img src="../assets/logo.png" alt="Ferrari Logo" class="ferrari-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div style="display:none; color: #FF0000; font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 1.5rem;">EXOTICS</div>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="navbar-link text-current">Home</a>
+                <a href="cars.html" class="navbar-link text-current">Browse Cars</a>
+                <a href="favorites.html" class="navbar-link text-current">Favorites</a>
+                <a href="compare.html" class="navbar-link text-current">Compare</a>
+            </div>
+
+            <!-- Theme Toggle -->
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium hidden sm:inline">Eco</span>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+          <div class="theme-toggle-slider"></div>
+        </button>
+                <span class="text-sm font-medium hidden sm:inline">Sport</span>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- ===========================
+       HERO SECTION
+       =========================== -->
+    <section class="hero-section theme-bg">
+
+        <!-- Video Background (Always Visible) -->
+        <video id="hero-video" class="video-background" autoplay loop muted playsinline preload="auto">
+            <source src="../../BG Video.mp4" type="video/mp4">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-dashboard-of-a-sports-car-at-night-49838-large.mp4" type="video/mp4">
+        </video>
+
+        <!-- Video Overlay -->
+        <div class="video-overlay"></div>
+
+        <!-- Hero Content -->
+        <div class="hero-content parallax-content">
+            <h1 class="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+                Discover Your
+                <br>
+                <span class="text-gradient">
+          Dream Car
+        </span>
+            </h1>
+
+            <p class="hero-subtitle text-lg md:text-xl lg:text-2xl opacity-90">
+                Explore the world's most exclusive automotive collection. Compare specs, save favorites, and find your perfect match.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="cars.html" class="btn-primary btn-sport">
+          Browse Cars
+        </a>
+                <a href="compare.html" class="btn-primary btn-outline-sport">
+          Compare Cars
+        </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <svg class="w-6 h-6 text-current opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+        </div>
+
+    </section>
+
+    <!-- ===========================
+       FEATURES SECTION
+       =========================== -->
+    <section class="py-20 px-6 relative overflow-hidden">
+        <!-- Animated Background Elements -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto relative z-10">
+            <!-- Section Title -->
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-black mb-4 font-display">
+                    Why Choose <span class="text-gradient">Car Explorer</span>
+                </h2>
+                <p class="text-xl opacity-80 max-w-2xl mx-auto">
+                    Experience automotive excellence with cutting-edge technology
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- Feature 1 -->
+                <div class="feature-card scroll-reveal" style="animation-delay: 0.1s;">
+                    <div class="feature-icon-wrapper">
+                        <div class="text-6xl mb-4 feature-icon">🚗</div>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Premium Collection</h3>
+                    <p class="opacity-80 leading-relaxed">Explore our curated selection of the world's finest automobiles</p>
+                    <div class="feature-glow"></div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card scroll-reveal" style="animation-delay: 0.2s;">
+                    <div class="feature-icon-wrapper">
+                        <div class="text-6xl mb-4 feature-icon">⚡</div>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Smart Compare</h3>
+                    <p class="opacity-80 leading-relaxed">Compare specs side-by-side to make the perfect choice</p>
+                    <div class="feature-glow"></div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card scroll-reveal" style="animation-delay: 0.3s;">
+                    <div class="feature-icon-wrapper">
+                        <div class="text-6xl mb-4 feature-icon">❤️</div>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Save Favorites</h3>
+                    <p class="opacity-80 leading-relaxed">Build your dream garage with our favorites system</p>
+                    <div class="feature-glow"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================
+       STATS SECTION
+       =========================== -->
+    <section class="py-20 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+
+                <!-- Stat 1 -->
+                <div class="stat-card scroll-reveal" data-count="12">
+                    <div class="stat-number" data-target="12">0</div>
+                    <div class="stat-label">Premium Cars</div>
+                    <div class="stat-bar"></div>
+                </div>
+
+                <!-- Stat 2 -->
+                <div class="stat-card scroll-reveal" data-count="5" style="animation-delay: 0.1s;">
+                    <div class="stat-number" data-target="5">0</div>
+                    <div class="stat-label">Vehicle Types</div>
+                    <div class="stat-bar"></div>
+                </div>
+
+                <!-- Stat 3 -->
+                <div class="stat-card scroll-reveal" data-count="100" style="animation-delay: 0.2s;">
+                    <div class="stat-number" data-target="100">0</div>
+                    <div class="stat-label">Detailed Info</div>
+                    <div class="stat-bar"></div>
+                </div>
+
+                <!-- Stat 4 -->
+                <div class="stat-card scroll-reveal" data-count="24" style="animation-delay: 0.3s;">
+                    <div class="stat-number" data-target="24">0</div>
+                    <div class="stat-label">Hours Support</div>
+                    <div class="stat-bar"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================
+       CTA SECTION
+       =========================== -->
+    <section class="py-32 px-6 relative overflow-hidden">
+        <div class="cta-background"></div>
+
+        <div class="max-w-4xl mx-auto text-center relative z-10 scroll-reveal">
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-black mb-6 font-display">
+                Ready to Find Your <span class="text-gradient">Perfect Car?</span>
+            </h2>
+            <p class="text-xl md:text-2xl opacity-90 mb-10 leading-relaxed">
+                Start exploring our exclusive collection today
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <a href="cars.html" class="btn-primary btn-sport btn-large">
+                    <span>Explore Collection</span>
+                    <svg class="btn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+          </svg>
+                </a>
+                <a href="compare.html" class="btn-primary btn-outline-sport btn-large">
+                    <span>Compare Cars</span>
+                    <svg class="btn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+          </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================
+       FOOTER
+       =========================== -->
+    <footer class="py-12 px-6 border-t border-opacity-20" style="border-color: currentColor;">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="opacity-70 text-sm md:text-base">
+                &copy; 2025 Car Explorer. Built with ❤️ for automotive enthusiasts.
+            </p>
+        </div>
+    </footer>
+
+    <!-- ===========================
+       JAVASCRIPT
+       =========================== -->
+    <script type="module" src="../js/theme.js"></script>
+    <script src="../js/animations.js"></script>
+
+</body>
+
+</html>
