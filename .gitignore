@@ -1,6 +1,6 @@
 # Ignore all markdown files
 *.md
-
+*.gitignore
 # Except README.md
 !README.md
 
