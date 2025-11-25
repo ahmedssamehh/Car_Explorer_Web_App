@@ -1,0 +1,32 @@
+# Ignore all markdown files
+*.md
+
+# Except README.md
+!README.md
+
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment variables
+.env
+.env.local
+
