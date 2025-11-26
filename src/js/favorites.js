@@ -231,9 +231,6 @@ function createFavoriteCard(car, index) {
                 </div>
             </div>
             <div class="favorite-actions">
-                <a href="details.html?id=${car.id}" class="view-details-btn">
-                    View Details
-                </a>
                 <button class="remove-btn" onclick="removeFavorite(${car.id})">
                     Remove
                 </button>
