@@ -97,7 +97,7 @@
     <section class="hero-section theme-bg">
 
         <!-- Video Background (Always Visible) -->
-        <video id="hero-video" class="video-background" autoplay loop muted playsinline preload="auto">
+        <video id="hero-video" class="video-background" autoplay loop muted playsinline preload="auto" disablePictureInPicture webkit-playsinline x5-playsinline>
             <source src="../../material/BG Video3.mp4" type="video/mp4">
             <source src="https://assets.mixkit.co/videos/preview/mixkit-dashboard-of-a-sports-car-at-night-49838-large.mp4" type="video/mp4">
         </video>
@@ -203,32 +203,36 @@
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
 
-                <!-- Stat 1 -->
-                <div class="stat-card scroll-reveal" data-count="12">
-                    <div class="stat-number" data-target="12">0</div>
+                <!-- Stat 1 - Total Cars -->
+                <div class="stat-card scroll-reveal rpm-counter" data-count="15" data-suffix="">
+                    <div class="stat-number" data-target="15">0</div>
                     <div class="stat-label">Premium Cars</div>
                     <div class="stat-bar"></div>
+                    <div class="rpm-needle"></div>
                 </div>
 
-                <!-- Stat 2 -->
-                <div class="stat-card scroll-reveal" data-count="5" style="animation-delay: 0.1s;">
-                    <div class="stat-number" data-target="5">0</div>
+                <!-- Stat 2 - Vehicle Types -->
+                <div class="stat-card scroll-reveal rpm-counter" data-count="6" data-suffix="" style="animation-delay: 0.1s;">
+                    <div class="stat-number" data-target="6">0</div>
                     <div class="stat-label">Vehicle Types</div>
                     <div class="stat-bar"></div>
+                    <div class="rpm-needle"></div>
                 </div>
 
-                <!-- Stat 3 -->
-                <div class="stat-card scroll-reveal" data-count="100" style="animation-delay: 0.2s;">
-                    <div class="stat-number" data-target="100">0</div>
-                    <div class="stat-label">Detailed Info</div>
+                <!-- Stat 3 - Max Horsepower -->
+                <div class="stat-card scroll-reveal rpm-counter" data-count="1578" data-suffix="HP" style="animation-delay: 0.2s;">
+                    <div class="stat-number" data-target="1578">0</div>
+                    <div class="stat-label">Max Horsepower</div>
                     <div class="stat-bar"></div>
+                    <div class="rpm-needle"></div>
                 </div>
 
-                <!-- Stat 4 -->
-                <div class="stat-card scroll-reveal" data-count="24" style="animation-delay: 0.3s;">
-                    <div class="stat-number" data-target="24">0</div>
-                    <div class="stat-label">Hours Support</div>
+                <!-- Stat 4 - Top Speed -->
+                <div class="stat-card scroll-reveal rpm-counter" data-count="273" data-suffix="MPH" style="animation-delay: 0.3s;">
+                    <div class="stat-number" data-target="273">0</div>
+                    <div class="stat-label">Top Speed</div>
                     <div class="stat-bar"></div>
+                    <div class="rpm-needle"></div>
                 </div>
 
             </div>
@@ -271,7 +275,7 @@
     <footer class="py-12 px-6 border-t border-opacity-20" style="border-color: currentColor;">
         <div class="max-w-7xl mx-auto text-center">
             <p class="opacity-70 text-sm md:text-base">
-                &copy; 2025 Car Explorer. Built with ❤️ for automotive enthusiasts.
+                &copy; 2025 Car Explorer. Built with passion for automotive enthusiasts
             </p>
         </div>
     </footer>

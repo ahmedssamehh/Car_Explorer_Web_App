@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Details - Car Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .slide-up {
+            animation: slideUp 0.6s ease-out forwards;
+        }
+        
+        .scale-in {
+            animation: scaleIn 0.5s ease-out forwards;
+        }
+        
+        .stagger-1 {
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+        
+        .stagger-2 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+        
+        .stagger-3 {
+            animation-delay: 0.3s;
+            opacity: 0;
+        }
+        
+        .stagger-4 {
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+        
+        .stagger-5 {
+            animation-delay: 0.5s;
+            opacity: 0;
+        }
+        
+        .stagger-6 {
+            animation-delay: 0.6s;
+            opacity: 0;
+        }
+        
+        .hero-parallax {
+            transform: translateY(0);
+            transition: transform 0.1s linear;
+        }
+        
+        .spec-card {
+            transition: all 0.3s ease;
+        }
+        
+        .spec-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-badge {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-badge:hover {
+            transform: scale(1.05);
+        }
+        
+        .action-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+        
+        .action-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .gradient-overlay {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7));
+        }
+        /* Sport Theme */
+        
+        body[data-theme="sport"] {
+            background: linear-gradient(135deg, #1a0000 0%, #000000 100%);
+            color: #ffffff;
+        }
+        
+        body[data-theme="sport"] .spec-card {
+            background: rgba(139, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+        
+        body[data-theme="sport"] .spec-card:hover {
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+            border-color: rgba(255, 0, 0, 0.6);
+        }
+        
+        body[data-theme="sport"] .feature-badge {
+            background: rgba(139, 0, 0, 0.3);
+            border: 1px solid rgba(255, 0, 0, 0.4);
+            color: #ff4444;
+        }
+        
+        body[data-theme="sport"] .action-btn {
+            background: linear-gradient(135deg, #8B0000, #FF0000);
+            box-shadow: 0 5px 20px rgba(255, 0, 0, 0.3);
+        }
+        
+        body[data-theme="sport"] .action-btn:hover {
+            box-shadow: 0 8px 30px rgba(255, 0, 0, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        body[data-theme="sport"] .type-badge {
+            background: linear-gradient(135deg, #8B0000, #FF0000);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+        /* Eco Theme */
+        
+        body[data-theme="eco"] {
+            background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+            color: #1a1a1a;
+        }
+        
+        body[data-theme="eco"] .spec-card {
+            background: rgba(34, 197, 94, 0.05);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            box-shadow: 0 2px 10px rgba(34, 197, 94, 0.1);
+        }
+        
+        body[data-theme="eco"] .spec-card:hover {
+            box-shadow: 0 4px 20px rgba(34, 197, 94, 0.2);
+            border-color: rgba(34, 197, 94, 0.4);
+        }
+        
+        body[data-theme="eco"] .feature-badge {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #16a34a;
+        }
+        
+        body[data-theme="eco"] .action-btn {
+            background: linear-gradient(135deg, #16a34a, #22c55e);
+            box-shadow: 0 3px 15px rgba(34, 197, 94, 0.2);
+        }
+        
+        body[data-theme="eco"] .action-btn:hover {
+            box-shadow: 0 5px 25px rgba(34, 197, 94, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        body[data-theme="eco"] .type-badge {
+            background: linear-gradient(135deg, #16a34a, #22c55e);
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+        }
+        
+        .divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, currentColor, transparent);
+            opacity: 0.3;
+        }
+        
+        .error-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Transparent Navbar for Details Page */
+        
+        .navbar {
+            background: transparent !important;
+            backdrop-filter: none !important;
+        }
+        
+        .navbar.scrolled {
+            background: rgba(0, 0, 0, 0.8) !important;
+            backdrop-filter: blur(10px) !important;
+        }
+        
+        body[data-theme="eco"] .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.9) !important;
+        }
+        
+        body[data-theme="sport"] .navbar.scrolled {
+            background: rgba(0, 0, 0, 0.9) !important;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen" data-theme="eco">
+
+    <!-- ===========================
+       NAVIGATION BAR
+       =========================== -->
+    <nav class="navbar fixed top-0 left-0 w-full z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+
+            <!-- Logo -->
+            <div class="flex items-center">
+                <div style="color: #FF0000; font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 1.5rem;">EXOTICS</div>
+            </div>
+
+            <!-- Navigation Links (Desktop) -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="navbar-link text-current">Home</a>
+                <a href="cars.html" class="navbar-link text-current">Browse Cars</a>
+                <a href="favorites.html" class="navbar-link text-current">Favorites</a>
+                <a href="compare.html" class="navbar-link text-current">Compare</a>
+            </div>
+
+            <!-- Right Side: Theme Toggle & Mobile Menu Button -->
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium hidden sm:inline">Eco</span>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <div class="theme-toggle-slider"></div>
+                </button>
+                <span class="text-sm font-medium hidden sm:inline">Sport</span>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden mobile-menu-btn" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path class="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path class="close-icon hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <div class="mobile-menu-content">
+                <a href="index.html" class="mobile-menu-link">Home</a>
+                <a href="cars.html" class="mobile-menu-link">Browse Cars</a>
+                <a href="favorites.html" class="mobile-menu-link">Favorites</a>
+                <a href="compare.html" class="mobile-menu-link">Compare</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="fixed inset-0 flex items-center justify-center z-50">
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-current mx-auto"></div>
+            <p class="mt-4 text-lg font-semibold">Loading car details...</p>
+        </div>
+    </div>
+
+    <!-- Error State -->
+    <div id="errorState" class="error-container hidden">
+        <div class="text-center px-6 scale-in">
+            <svg class="w-24 h-24 mx-auto mb-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+            <h1 class="text-4xl font-bold mb-4">Car Not Found</h1>
+            <p class="text-xl mb-8 opacity-80">The car you're looking for doesn't exist or has been removed.</p>
+            <a href="cars.html" class="action-btn inline-block px-8 py-4 text-white font-semibold rounded-lg">
+                Back to Browse Cars
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="hidden">
+
+        <!-- Hero Section -->
+        <section class="relative h-[70vh] min-h-[500px] overflow-hidden">
+            <div class="hero-parallax absolute inset-0">
+                <img id="carImage" src="" alt="Car" class="w-full h-full object-cover">
+                <div class="gradient-overlay absolute inset-0"></div>
+            </div>
+
+            <div class="relative z-10 h-full flex items-end pb-16 pt-24">
+                <div class="container mx-auto px-6">
+                    <div class="fade-in">
+                        <div class="flex items-center gap-4 mb-4">
+                            <span id="typeBadge" class="type-badge px-6 py-2 rounded-full text-white font-bold text-sm uppercase tracking-wider"></span>
+                            <span id="yearBadge" class="bg-black bg-opacity-50 px-4 py-2 rounded-full text-white font-semibold"></span>
+                        </div>
+                        <h1 id="carTitle" class="text-5xl md:text-7xl font-bold text-white mb-2"></h1>
+                        <p id="carSubtitle" class="text-xl md:text-2xl text-gray-200"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Info Section -->
+        <div class="container mx-auto px-6 py-12">
+
+            <!-- Divider -->
+            <div class="divider mb-12 slide-up stagger-1"></div>
+
+            <!-- Specifications Grid -->
+            <div class="mb-16 slide-up stagger-2">
+                <h2 class="text-3xl font-bold mb-8">Technical Specifications</h2>
+                <div id="specsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Specs will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="mb-16 slide-up stagger-3" id="featuresSection">
+                <h2 class="text-3xl font-bold mb-8">Features & Highlights</h2>
+                <div id="featuresList" class="flex flex-wrap gap-3">
+                    <!-- Features will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap gap-4 justify-center slide-up stagger-4">
+                <button id="favoriteBtn" class="action-btn px-8 py-4 text-white font-semibold rounded-lg flex items-center gap-3">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"></path>
+                    </svg>
+                    <span id="favoriteBtnText">Add to Favorites</span>
+                </button>
+
+                <button id="compareBtn" class="action-btn px-8 py-4 text-white font-semibold rounded-lg flex items-center gap-3">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                        <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span id="compareBtnText">Add to Compare</span>
+                </button>
+
+                <a href="cars.html" class="action-btn px-8 py-4 text-white font-semibold rounded-lg flex items-center gap-3">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    <span>Back to Browse Cars</span>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- ===========================
+           FOOTER
+           =========================== -->
+        <footer class="py-12 px-6 border-t border-opacity-20" style="border-color: currentColor;">
+            <div class="max-w-7xl mx-auto text-center">
+                <p class="opacity-70 text-sm md:text-base">
+                    &copy; 2025 Car Explorer. Built with passion for automotive enthusiasts.
+                </p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script type="module" src="../js/theme.js"></script>
+    <script src="../js/details.js"></script>
+</body>
+
+</html>
